@@ -4,4 +4,10 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-console': 'off',
   },
+  'prettier/prettier': [
+    'error',
+    {
+      endOfLine: 'auto',
+    },
+  ],
 };

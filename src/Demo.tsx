@@ -10,6 +10,7 @@ import { RuntimeContext } from './context';
 import { CustomMessage } from './custom-message.enum';
 import { CalendarMessage } from './messages/CalendarMessage.component';
 import { VideoMessage } from './messages/VideoMessage.component';
+import { Testmessage } from './messages/Test.component';
 import { DemoContainer } from './styled';
 import { useLiveAgent } from './use-live-agent.hook';
 
@@ -63,7 +64,7 @@ export const Demo: React.FC = () => {
             description="welcome to my assistant"
             image={IMAGE}
             avatar={AVATAR}
-            withWatermark
+            withWatermark={false}
             startTime={runtime.session.startTime}
             hasEnded={runtime.isStatus(SessionStatus.ENDED)}
             isLoading={!runtime.session.turns.length}
@@ -86,6 +87,7 @@ export const Demo: React.FC = () => {
                           <CalendarMessage {...props} value={new Date(today)} runtime={runtime} />
                         ))
                         .with({ type: CustomMessage.VIDEO }, ({ payload: url }) => <VideoMessage url={url} />)
+                        .with({ type: CustomMessage.TEST }, ({ payload: url }) => <Testmessage url={url} />)
                         .with({ type: CustomMessage.STREAMED_RESPONSE }, ({ payload: { getSocket } }) => <StreamedMessage getSocket={getSocket} />)
                         .otherwise(() => <SystemResponse.SystemMessage {...props} message={message} />)
                     }

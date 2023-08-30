@@ -4,6 +4,7 @@ import { createContext, useMemo } from 'react';
 
 import { LiveAgentPlatform } from '../shared/live-agent-platform.enum';
 import { AccountInfoTrace } from './traces/account-info.trace';
+import { TestingTrace } from './traces/testing.trace';
 import { CalendarTrace } from './traces/calendar.trace';
 import { TalkToAgentTrace } from './traces/talk-to-agent.trace';
 import { VideoTrace } from './traces/video.trace';
@@ -24,9 +25,8 @@ export const RuntimeProvider: React.FC<React.PropsWithChildren> = ({ children })
   const runtime = useRuntime({
     verify: { authorization: import.meta.env.VF_DM_API_KEY },
     session: { userID: `anonymous-${Math.random()}` },
-    traces: [AccountInfoTrace, CalendarTrace, VideoTrace, TalkToAgentTrace((platform) => emitter.emit('live_agent', platform))],
+    traces: [TestingTrace, AccountInfoTrace, CalendarTrace, VideoTrace, TalkToAgentTrace((platform) => emitter.emit('live_agent', platform))],
   });
-
   const subscribe = (event: keyof RuntimeEvents, callback: (data?: any) => void) => emitter.on(event, callback);
 
   return <RuntimeContext.Provider value={{ runtime, subscribe }}>{children}</RuntimeContext.Provider>;
